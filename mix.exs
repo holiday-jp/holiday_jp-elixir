@@ -28,7 +28,7 @@ defmodule HolidayJp.Mixfile do
         extras: ["README.md"]
       ],
       homepage_url: "https://hexdocs.pm/holiday_jp",
-      source_url: "https://github.com/ne-sachirou/holiday_jp-elixir",
+      source_url: "https://github.com/holiday-jp/holiday_jp-elixir",
       name: "HolidayJp"
     ]
   end
@@ -60,7 +60,7 @@ defmodule HolidayJp.Mixfile do
       name: :holiday_jp,
       maintainers: ["ne_Sachirou <utakata.c4se@gmail.com>"],
       links: %{
-        GitHub: "https://github.com/ne-sachirou/holiday_jp-elixir"
+        GitHub: "https://github.com/holiday-jp/holiday_jp-elixir"
       },
       files: ["LICENSE", "README.md", "mix.exs", "priv", "lib/holiday_jp.ex", "lib/holiday_jp"]
     ]
