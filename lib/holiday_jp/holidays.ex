@@ -1,50 +1,52 @@
 defmodule HolidayJp.Holidays do
   @moduledoc false
 
+  alias HolidayJp.Holiday
+
   use GenServer
 
-  def start_link, do: GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  def start_link(arg), do: GenServer.start_link(__MODULE__, arg, name: __MODULE__)
 
-  @spec holidays :: [%HolidayJp.Holiday{}]
+  @spec holidays :: [Holiday.t()]
   def holidays, do: GenServer.call(__MODULE__, :holidays)
 
-  @spec between(%Date{}, %Date{}) :: [%HolidayJp.Holiday{}]
+  @spec between(Date.t(), Date.t()) :: [Holiday.t()]
   def between(start, last), do: GenServer.call(__MODULE__, {:between, start, last})
 
-  @spec holiday?(%Date{}) :: boolean
+  @spec holiday?(Date.t()) :: boolean
   def holiday?(date), do: GenServer.call(__MODULE__, {:holiday?, date})
 
-  def init([]) do
-    holidays =
-      :holiday_jp
-      |> :code.priv_dir()
-      |> Path.join("holidays.ets")
-      |> :erlang.binary_to_list()
+  @impl true
+  def init(_) do
+    {:ok, tab} =
+      [:code.priv_dir(:holiday_jp), "holidays.ets"]
+      |> Path.join()
+      |> String.to_charlist()
       |> :ets.file2tab()
-      |> elem(1)
-      |> :ets.lookup(:holidays)
-      |> Keyword.fetch!(:holidays)
 
+    [holidays: holidays] = :ets.lookup(tab, :holidays)
+    true = :ets.delete(tab)
     {:ok, holidays}
   end
 
+  @impl true
   def handle_call(:holidays, _from, holidays), do: {:reply, holidays, holidays}
 
   def handle_call({:between, start, last}, _from, holidays) do
     between_holidays =
-      Enum.filter(holidays, fn %{date: date} ->
-        comparison_to_start = Date.compare(start, date)
-        comparison_to_last = Date.compare(date, last)
-
-        (comparison_to_start == :lt or comparison_to_start == :eq) and
-          (comparison_to_last == :lt or comparison_to_last == :eq)
-      end)
+      for %{date: date} = holiday <- holidays,
+          (case {Date.compare(start, date), Date.compare(date, last)} do
+             {:lt, :lt} -> true
+             {:eq, :lt} -> true
+             {:lt, :eq} -> true
+             {:eq, :eq} -> true
+             _ -> false
+           end),
+          do: holiday
 
     {:reply, between_holidays, holidays}
   end
 
-  def handle_call({:holiday?, date}, _from, holidays) do
-    holiday? = Enum.any?(holidays, &(&1.date == date))
-    {:reply, holiday?, holidays}
-  end
+  def handle_call({:holiday?, date}, _from, holidays),
+    do: {:reply, Enum.any?(holidays, &(&1.date == date)), holidays}
 end

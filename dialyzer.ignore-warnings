@@ -1,7 +1,2 @@
-:0: Unknown function 'Elixir.Mix.Task':run/1
-:0: Unknown function 'Elixir.Mix.Task':run/2
-lib/mix/tasks/generate/holidays.ex:1: Callback info about the 'Elixir.Mix.Task' behaviour is not available
-lib/mix/tasks/generate/holidays.ex:9: Function run/1 has no local return
-lib/mix/tasks/generate/holidays.ex:14: The call 'Elixir.RelaxYaml.Decoder':read_from_file(src@1::binary()) will never return since it differs in the 1st argument from the success typing arguments: (string())
-lib/mix/tasks/test/all.ex:1: Callback info about the 'Elixir.Mix.Task' behaviour is not available
-lib/mix/tasks/update.ex:1: Callback info about the 'Elixir.Mix.Task' behaviour is not available
+lib/mix/tasks/generate/holidays.ex:13: Function run/1 has no local return
+lib/mix/tasks/generate/holidays.ex:20: The call yamerl:decode_file(Vsrc@1::binary()) will never return since the success typing is (string()) -> [any()] and the contract is (Filename) -> Result | no_return() when Filename :: string(), Result :: [yamerl_doc()] | [yamerl_simple_doc()] | term()
