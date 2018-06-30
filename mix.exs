@@ -21,7 +21,7 @@ defmodule HolidayJp.Mixfile do
       ],
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.2.3",
+      version: "0.2.4",
 
       # Docs
       docs: [
@@ -57,13 +57,13 @@ defmodule HolidayJp.Mixfile do
 
   defp package do
     [
-      licenses: ["GPL-3.0"],
-      name: :holiday_jp,
-      maintainers: ["ne_Sachirou <utakata.c4se@gmail.com>"],
+      files: ["LICENSE", "README.md", "mix.exs", "priv", "lib/holiday_jp.ex", "lib/holiday_jp"],
+      licenses: ["GPL-3.0-or-later"],
       links: %{
         GitHub: "https://github.com/holiday-jp/holiday_jp-elixir"
       },
-      files: ["LICENSE", "README.md", "mix.exs", "priv", "lib/holiday_jp.ex", "lib/holiday_jp"]
+      maintainers: ["ne_Sachirou <utakata.c4se@gmail.com>"],
+      name: :holiday_jp
     ]
   end
 end
