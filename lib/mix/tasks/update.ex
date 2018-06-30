@@ -1,8 +1,13 @@
 defmodule Mix.Tasks.Update do
-  @moduledoc false
+  @moduledoc """
+  Update all dependencies.
+  """
+
   use Mix.Task
 
   @shortdoc "Update all dependencies."
+
+  @impl true
   def run(_) do
     IO.puts("+ mix deps.update --all")
     Mix.Task.run("deps.update", ["--all"])

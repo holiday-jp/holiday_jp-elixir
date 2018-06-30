@@ -4,13 +4,11 @@ defmodule HolidayJp.Application do
   use Application
 
   def start(_type, _args) do
-    import Supervisor.Spec, warn: false
-
     children = [
-      worker(HolidayJp.Holidays, [])
+      HolidayJp.Holidays
     ]
 
-    opts = [strategy: :one_for_one, name: SampleSup.Supervisor]
+    opts = [strategy: :one_for_one, name: HolidayJp.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

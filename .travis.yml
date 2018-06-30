@@ -1,10 +1,15 @@
 language: elixir
 elixir:
   - "1.5.3"
-  - "1.6.4"
+  - "1.6.6"
+matrix:
+  exclude:
+    -
+      elixir: "1.5.3"
+      otp_release: "21.0"
 notifications:
   slack:
     secure: "mlthr8zuBuPquwJ8iElyxJ4mCXHjW+v9wvrNONq2sbgknHzLcGDxE9nCm2SDgG7UDJkSiFohf1F3uwA0g95gyqW+gvgD+RHOIcvVfXGAfueP0t3qnjjlvmVh0I/+3Qe5P11r0d8z5rOK3Pk0yeiTA5vwL8JP51R57n9pmO+9Uy5mvwF+6UGaT0jY9xyWOf1qGOTMkZtE9idNyTlUwh0I7ggD4RNRkvMHx7Ykc377CMc9RBDX84KvWSDZS1Pj1DnYaSboGIsbYduduuP/7D/GUa+UahgqYiYJw/RC3p5GjUzH9kdpSjZg8/4QI1CXlRwURwupwnsoMmaJv/JeJW104IkobKb8wDr7SwlhtS4nFMSf26oezZK2qf0/Gg6T1PmhwbU1ufyfTrGuavWat8ZZd8tWGOEDbFVokGeroBTSLGXFlQoAF2SdB0lcRK5ygQTCPIgaSWJ/QJ3IMCleWBD5LOsRB0YHXiqBHq0ZR1+DNAdFn9ia+3kTFwpJn4cfGxS/TbpQRl6wpOi5mQ89eJl8kBEI6PrHfB028SI+3k1wE8ZY2mbNngKjkXMscYz4h6HqGoe0pvBaf39Qj120LYiKjQUtfi7WM2bdTfgcZPWqvuB5W5L53PoNuH5YnuZq545tzj/XVuH7OsOkkmZ56KT8CRZfQiurIMQrgfcyD4nAhgU="
 otp_release:
-  - "19.3"
-  - "20.2"
+  - "20.3"
+  - "21.0"

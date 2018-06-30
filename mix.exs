@@ -8,7 +8,8 @@ defmodule HolidayJp.Mixfile do
       deps: deps(),
       description: description(),
       dialyzer: [
-        ignore_warnings: "dialyzer.ignore-warnings"
+        ignore_warnings: "dialyzer.ignore-warnings",
+        plt_add_apps: [:mix]
       ],
       elixir: "~> 1.5",
       package: package(),
@@ -44,7 +45,7 @@ defmodule HolidayJp.Mixfile do
     [
       {:ex_doc, "~> 0.18", only: :dev},
       {:inner_cotton, github: "ne-sachirou/inner_cotton", only: [:dev, :test]},
-      {:relax_yaml, "~> 0.1", only: [:dev, :test]}
+      {:yamerl, "~> 0.7", only: [:dev, :test]}
     ]
   end
 
