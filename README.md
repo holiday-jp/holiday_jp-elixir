@@ -13,7 +13,7 @@ Add `holiday_jp` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:holiday_jp, "~> 0.2"}]
+  [{:holiday_jp, "~> 0.3"}]
 end
 ```
 

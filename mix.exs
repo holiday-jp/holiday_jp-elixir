@@ -1,6 +1,8 @@
 defmodule HolidayJp.Mixfile do
   use Mix.Project
 
+  @github "https://github.com/holiday-jp/holiday_jp-elixir"
+
   def project do
     [
       app: :holiday_jp,
@@ -23,16 +25,16 @@ defmodule HolidayJp.Mixfile do
       ],
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.2.4",
+      version: "0.3.1",
 
       # Docs
       docs: [
         main: "readme",
         extras: ["README.md"]
       ],
-      homepage_url: "https://hexdocs.pm/holiday_jp",
-      source_url: "https://github.com/holiday-jp/holiday_jp-elixir",
-      name: "HolidayJp"
+      homepage_url: @github,
+      name: "HolidayJp",
+      source_url: @github
     ]
   end
 
@@ -46,7 +48,7 @@ defmodule HolidayJp.Mixfile do
   defp deps do
     [
       {:ex_doc, "~> 0.18", only: :dev},
-      {:inner_cotton, github: "ne-sachirou/inner_cotton", only: [:dev, :test]},
+      {:inner_cotton, "~> 0.3"},
       {:yamerl, "~> 0.7", only: [:dev, :test]}
     ]
   end
@@ -61,9 +63,7 @@ defmodule HolidayJp.Mixfile do
     [
       files: ["LICENSE", "README.md", "mix.exs", "priv", "lib/holiday_jp.ex", "lib/holiday_jp"],
       licenses: ["GPL-3.0-or-later"],
-      links: %{
-        GitHub: "https://github.com/holiday-jp/holiday_jp-elixir"
-      },
+      links: %{GitHub: @github},
       maintainers: ["ne_Sachirou <utakata.c4se@gmail.com>"],
       name: :holiday_jp
     ]
