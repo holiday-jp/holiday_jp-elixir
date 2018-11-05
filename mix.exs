@@ -48,8 +48,8 @@ defmodule HolidayJp.Mixfile do
   defp deps do
     [
       {:ex_doc, "~> 0.18", only: :dev},
-      {:inner_cotton, "~> 0.3"},
-      {:yamerl, "~> 0.7", only: [:dev, :test]}
+      {:inner_cotton, "~> 0.3", only: [:dev, :test]},
+      {:yamerl, "~> 0.7", only: :dev}
     ]
   end
 
