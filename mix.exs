@@ -7,7 +7,7 @@ defmodule HolidayJp.Mixfile do
     [
       app: :holiday_jp,
       build_embedded: Mix.env() == :prod,
-      deps: deps(),
+      deps: deps(Mix.env()),
       description: description(),
       dialyzer: [
         flags: [:no_undefined_callbacks],
@@ -25,7 +25,7 @@ defmodule HolidayJp.Mixfile do
       ],
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.3.1",
+      version: "0.3.2",
 
       # Docs
       docs: [
@@ -45,11 +45,14 @@ defmodule HolidayJp.Mixfile do
     ]
   end
 
-  defp deps do
+  defp deps(:publish), do: []
+
+  defp deps(_) do
     [
       {:ex_doc, "~> 0.18", only: :dev},
       {:inner_cotton, "~> 0.3", only: [:dev, :test]},
       {:yamerl, "~> 0.7", only: :dev}
+      | deps(:publish)
     ]
   end
 
