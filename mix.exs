@@ -25,7 +25,7 @@ defmodule HolidayJp.Mixfile do
       ],
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.3.2",
+      version: "0.3.3",
 
       # Docs
       docs: [
@@ -45,11 +45,10 @@ defmodule HolidayJp.Mixfile do
     ]
   end
 
-  defp deps(:publish), do: []
+  defp deps(:publish), do: [{:ex_doc, "~> 0.18", only: :dev, runtime: false}]
 
   defp deps(_) do
     [
-      {:ex_doc, "~> 0.18", only: :dev},
       # {:inner_cotton, "~> 0.3", only: [:dev, :test]},
       {:inner_cotton, github: "ne-sachirou/inner_cotton", only: [:dev, :test]},
       {:yamerl, "~> 0.7", only: :dev}
