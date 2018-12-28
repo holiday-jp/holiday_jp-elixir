@@ -50,7 +50,8 @@ defmodule HolidayJp.Mixfile do
   defp deps(_) do
     [
       {:ex_doc, "~> 0.18", only: :dev},
-      {:inner_cotton, "~> 0.3", only: [:dev, :test]},
+      # {:inner_cotton, "~> 0.3", only: [:dev, :test]},
+      {:inner_cotton, github: "ne-sachirou/inner_cotton", only: [:dev, :test]},
       {:yamerl, "~> 0.7", only: :dev}
       | deps(:publish)
     ]
