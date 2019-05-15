@@ -21,11 +21,12 @@ defmodule HolidayJp.Mixfile do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
+        "coveralls.travis": :test,
         "coveralls.html": :test
       ],
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.3.3",
+      version: "0.3.4",
 
       # Docs
       docs: [
