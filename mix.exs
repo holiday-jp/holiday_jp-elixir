@@ -10,7 +10,6 @@ defmodule HolidayJp.Mixfile do
       deps: deps(Mix.env()),
       description: description(),
       dialyzer: [
-        flags: [:no_undefined_callbacks],
         ignore_warnings: "dialyzer.ignore-warnings",
         plt_add_apps: [:mix],
         remove_defaults: [:unknown]
