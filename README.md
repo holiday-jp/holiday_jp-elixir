@@ -2,8 +2,8 @@ HolidayJp
 ==
 Japanese holiday.
 
+[![Actions Status](https://github.com/holiday-jp/holiday_jp-elixir/workflows/test/badge.svg)](https://github.com/holiday-jp/holiday_jp-elixir/actions)
 [![Hex.pm](https://img.shields.io/hexpm/v/holiday_jp.svg)](https://hex.pm/packages/holiday_jp)
-[![Build Status](https://travis-ci.org/holiday-jp/holiday_jp-elixir.svg?branch=master)](https://travis-ci.org/holiday-jp/holiday_jp-elixir)
 
 This is an Elixir port of [holiday-jp/holiday_jp-ruby](https://github.com/holiday-jp/holiday_jp-ruby), using holiday data of [holiday-jp/holiday_jp](https://github.com/holiday-jp/holiday_jp).
 

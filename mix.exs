@@ -19,8 +19,7 @@ defmodule HolidayJp.Mixfile do
       preferred_cli_env: [
         coveralls: :test,
         "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.travis": :test,
+        "coveralls.github": :test,
         "coveralls.html": :test
       ],
       start_permanent: Mix.env() == :prod,
