@@ -24,7 +24,7 @@ defmodule HolidayJp.Mixfile do
       ],
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.3.6",
+      version: "0.3.7",
 
       # Docs
       docs: [
