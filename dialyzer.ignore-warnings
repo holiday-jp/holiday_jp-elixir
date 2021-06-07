@@ -8,3 +8,5 @@ lib/mix/tasks/generate/holidays.ex:20: The call yamerl:decode_file
                  Filename :: string(),
                  Result ::
                      [yamerl_doc()] | [yamerl_simple_doc()] | term()
+lib/mix/tasks/generate/holidays.ex:0: Function run/1 has no local return
+lib/mix/tasks/generate/holidays.ex:19: The call yamerl:decode_file(_src@1::binary()) will never return since the success typing is (string()) -> [any()] and the contract is (Filename) -> Result | no_return() when Filename :: string(), Result :: [yamerl_doc()] | [yamerl_simple_doc()] | term()
