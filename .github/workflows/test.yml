@@ -15,20 +15,17 @@ jobs:
   test:
     strategy:
       matrix:
-        elixir: ["1.13.x", "1.14.x"]
-        erlang: ["25.x", "26.x"]
+        elixir: ["1.13.x", "1.14.x", "1.15.x", "1.16.x", "1.17.x"]
+        erlang: ["25.x", "26.x", "27.x"]
         os: [ubuntu-latest]
-        exclude:
-          - elixir: "1.13.x"
-            erlang: "26.x"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.erlang }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: |
             _build
@@ -41,5 +38,7 @@ jobs:
         run: mix "do" deps.get, deps.clean --unused
       - name: Lint & test
         run: |
-          mix cotton.lint
-          mix coveralls.github
+          mix format --check-formatted
+          mix credo --strict
+          mix dialyzer
+          mix test

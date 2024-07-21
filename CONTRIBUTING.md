@@ -2,11 +2,14 @@ CONTRIBUTING
 ==
 Maintenace tasks
 --
-`mix update`
+`mix deps.update --all`
 Update all dependencies.
 
 `mix generate.holidays`
 Generate holidays.ets from holiday_jp dataset.
 
-`mix cotton.lint && mix coveralls`
-Run all lint & tests.
+`mix do format --check-formatted, credo --strict, dialyzer`
+Run static analysis.
+
+`mix test`
+Run tests.
