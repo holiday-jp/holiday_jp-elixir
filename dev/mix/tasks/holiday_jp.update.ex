@@ -1,6 +1,6 @@
-defmodule Mix.Tasks.Update do
+defmodule Mix.Tasks.HolidayJp.Update do
   @moduledoc """
-  Update all dependencies.
+  Update dependencies and regenerate holiday data.
   """
 
   use Mix.Task
