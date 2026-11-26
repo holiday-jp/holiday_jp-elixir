@@ -17,6 +17,7 @@ defmodule Mix.Tasks.Generate.Holidays do
 
     holidays =
       src
+      |> String.to_charlist()
       |> :yamerl.decode_file()
       |> hd
       |> Enum.map(fn {date, holiday} ->
@@ -24,10 +25,10 @@ defmodule Mix.Tasks.Generate.Holidays do
 
         %Holiday{
           date: Date.from_iso8601!(to_string(date)),
-          week: to_string(holiday['week']),
-          week_en: to_string(holiday['week_en']),
-          name: to_string(holiday['name']),
-          name_en: to_string(holiday['name_en'])
+          week: to_string(holiday[~c"week"]),
+          week_en: to_string(holiday[~c"week_en"]),
+          name: to_string(holiday[~c"name"]),
+          name_en: to_string(holiday[~c"name_en"])
         }
       end)
       |> Enum.sort(&(Date.compare(&1.date, &2.date) == :lt))
