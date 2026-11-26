@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Generate.Holidays do
 
   @impl true
   def run(_) do
-    :ok = Application.start(:yamerl)
+    {:ok, _} = Application.ensure_all_started(:yamerl)
     src = Path.join([__DIR__, "..", "..", "..", "..", "holiday_jp", "holidays_detailed.yml"])
     dest = Path.join(:code.priv_dir(:holiday_jp), "holidays.ets")
 
