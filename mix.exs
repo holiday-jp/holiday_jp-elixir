@@ -45,6 +45,7 @@ defmodule HolidayJp.MixProject do
       {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.4", only: :dev, runtime: false},
       {:ex_doc, "~> 0.18", only: :dev, runtime: false},
+      {:stream_data, "~> 1.0", only: :test},
       {:yamerl, "~> 0.7", only: [:dev, :test]}
     ]
   end
