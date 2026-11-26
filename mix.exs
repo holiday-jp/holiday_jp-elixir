@@ -1,4 +1,4 @@
-defmodule HolidayJp.Mixfile do
+defmodule HolidayJp.MixProject do
   use Mix.Project
 
   @github "https://github.com/holiday-jp/holiday_jp-elixir"
@@ -6,11 +6,9 @@ defmodule HolidayJp.Mixfile do
   def project do
     [
       app: :holiday_jp,
-      build_embedded: Mix.env() == :prod,
-      deps: deps(Mix.env()),
+      deps: deps(),
       description: description(),
       dialyzer: [
-        ignore_warnings: "dialyzer.ignore-warnings",
         plt_add_apps: [:mix],
         remove_defaults: [:unknown]
       ],
@@ -38,14 +36,12 @@ defmodule HolidayJp.Mixfile do
     ]
   end
 
-  defp deps(:publish), do: [{:ex_doc, "~> 0.18", only: :dev, runtime: false}]
-
-  defp deps(_) do
+  defp deps do
     [
       {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.4", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.18", only: :dev, runtime: false},
       {:yamerl, "~> 0.7", only: [:dev, :test]}
-      | deps(:publish)
     ]
   end
 
@@ -60,8 +56,7 @@ defmodule HolidayJp.Mixfile do
       files: ["LICENSE", "README.md", "mix.exs", "priv", "lib/holiday_jp.ex", "lib/holiday_jp"],
       licenses: ["GPL-3.0-or-later"],
       links: %{GitHub: @github},
-      maintainers: ["ne_Sachirou <utakata.c4se@gmail.com>"],
-      name: :holiday_jp
+      maintainers: ["ne_Sachirou <utakata.c4se@gmail.com>"]
     ]
   end
 end
