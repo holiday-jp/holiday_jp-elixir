@@ -52,3 +52,9 @@ iex> HolidayJp.on(~D[2017-02-11])
 iex> HolidayJp.on(~D[2017-02-13])
 []
 ```
+
+License
+--
+Starting with the next release after v0.4.0, this project is released under
+the [Unlicense](LICENSE). Previous releases remain available under their
+original GPL-3.0-or-later license.

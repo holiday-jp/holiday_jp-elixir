@@ -59,7 +59,7 @@ defmodule HolidayJp.MixProject do
   defp package do
     [
       files: ["LICENSE", "README.md", "mix.exs", "priv", "lib/holiday_jp.ex", "lib/holiday_jp"],
-      licenses: ["GPL-3.0-or-later"],
+      licenses: ["Unlicense"],
       links: %{GitHub: @github},
       maintainers: ["ne_Sachirou <utakata.c4se@gmail.com>"]
     ]
