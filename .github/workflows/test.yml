@@ -20,12 +20,12 @@ jobs:
             erlang: "29.x"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.erlang }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v6
         with:
           path: |
             _build
@@ -35,7 +35,7 @@ jobs:
             ${{ runner.os }}-erl${{ matrix.erlang }}-ex${{ matrix.elixir }}-
             ${{ runner.os }}-erl${{ matrix.erlang }}-
       - name: Install Elixir dependencies
-        run: mix "do" deps.get, deps.clean --unused
+        run: mix do deps.get + deps.clean --unused
       - name: Lint & test
         run: |
           mix format --check-formatted

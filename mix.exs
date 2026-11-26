@@ -44,7 +44,7 @@ defmodule HolidayJp.Mixfile do
     [
       {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.4", only: :dev, runtime: false},
-      {:yamerl, "~> 0.7", only: :dev}
+      {:yamerl, "~> 0.7", only: [:dev, :test]}
       | deps(:publish)
     ]
   end
