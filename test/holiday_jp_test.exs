@@ -1,9 +1,27 @@
 defmodule HolidayJpTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
+  use ExUnitProperties
 
   doctest HolidayJp
 
   describe "HolidayJp.between/2" do
+    property "includes a known holiday at either boundary and excludes it outside the range" do
+      check all(
+              date <- member_of([~D[2017-01-01], ~D[2017-01-09], ~D[2017-02-11], ~D[2017-12-23]]),
+              distance <- integer(1..30)
+            ) do
+        previous = Date.add(date, -distance)
+        following = Date.add(date, distance)
+
+        assert Enum.any?(HolidayJp.between(date, following), &(&1.date == date))
+        assert Enum.any?(HolidayJp.between(previous, date), &(&1.date == date))
+        refute Enum.any?(HolidayJp.between(previous, Date.add(date, -1)), &(&1.date == date))
+        refute Enum.any?(HolidayJp.between(Date.add(date, 1), following), &(&1.date == date))
+        assert [%{date: ^date}] = HolidayJp.between(date, date)
+        assert HolidayJp.between(following, previous) == []
+      end
+    end
+
     test "it returns holidays in Japan between the start<= and <=the last" do
       expected = [
         %HolidayJp.Holiday{
