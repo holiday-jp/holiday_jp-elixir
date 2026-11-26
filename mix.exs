@@ -14,7 +14,7 @@ defmodule HolidayJp.Mixfile do
         plt_add_apps: [:mix],
         remove_defaults: [:unknown]
       ],
-      elixir: "~> 1.13",
+      elixir: "~> 1.19",
       package: package(),
       preferred_cli_env: [
         coveralls: :test,

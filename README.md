@@ -7,6 +7,10 @@ Japanese holiday.
 
 This is an Elixir port of [holiday-jp/holiday_jp-ruby](https://github.com/holiday-jp/holiday_jp-ruby), using holiday data of [holiday-jp/holiday_jp](https://github.com/holiday-jp/holiday_jp).
 
+The target versions are Elixir 1.19 and 1.20 with Erlang/OTP 28, and Elixir
+1.20 with Erlang/OTP 29. CI covers the latest and previous Elixir minor and
+Erlang/OTP major releases, excluding combinations unsupported by Elixir.
+
 Installation
 --
 Add `holiday_jp` to your list of dependencies in `mix.exs`:
