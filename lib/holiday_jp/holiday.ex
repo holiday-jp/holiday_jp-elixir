@@ -8,10 +8,10 @@ defmodule HolidayJp.Holiday do
 
   @type t :: %__MODULE__{
           date: Date.t(),
-          week: binary,
-          week_en: binary,
-          name: binary,
-          name_en: binary
+          week: String.t(),
+          week_en: String.t(),
+          name: String.t(),
+          name_en: String.t()
         }
 
   defstruct date: ~D[1970-01-01], week: "", week_en: "", name: "", name_en: ""

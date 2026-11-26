@@ -13,7 +13,7 @@ defmodule HolidayJp.Holidays do
   @spec between(Date.t(), Date.t()) :: [Holiday.t()]
   def between(start, last), do: GenServer.call(__MODULE__, {:between, start, last})
 
-  @spec holiday?(Date.t()) :: boolean
+  @spec holiday?(Date.t()) :: boolean()
   def holiday?(date), do: GenServer.call(__MODULE__, {:holiday?, date})
 
   @impl true
