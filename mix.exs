@@ -17,7 +17,7 @@ defmodule HolidayJp.MixProject do
       package: package(),
       start_permanent: Mix.env() == :prod,
       test_coverage: [summary: [threshold: 0]],
-      version: "0.3.7",
+      version: "0.4.0",
 
       # Docs
       docs: [
