@@ -8,5 +8,11 @@ Update all dependencies.
 `mix generate.holidays`
 Generate holidays.ets from holiday_jp dataset.
 
-`mix cotton.lint && mix coveralls`
-Run all lint & tests.
+Run lint, type checks and tests with coverage:
+
+```sh
+mix format --check-formatted
+mix credo --strict
+mix dialyzer
+mix test --cover
+```

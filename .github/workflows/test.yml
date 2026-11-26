@@ -8,9 +8,6 @@ name: test
       - main
       - master
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   test:
     strategy:
@@ -44,4 +41,4 @@ jobs:
           mix format --check-formatted
           mix credo --strict
           mix dialyzer
-          mix coveralls.github
+          mix test --cover

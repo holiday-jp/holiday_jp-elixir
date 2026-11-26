@@ -16,14 +16,8 @@ defmodule HolidayJp.Mixfile do
       ],
       elixir: "~> 1.19",
       package: package(),
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.github": :test,
-        "coveralls.html": :test
-      ],
       start_permanent: Mix.env() == :prod,
-      test_coverage: [tool: ExCoveralls],
+      test_coverage: [summary: [threshold: 0]],
       version: "0.3.7",
 
       # Docs
@@ -48,8 +42,8 @@ defmodule HolidayJp.Mixfile do
 
   defp deps(_) do
     [
-      # {:inner_cotton, "~> 0.3", only: [:dev, :test]},
-      {:inner_cotton, github: "ne-sachirou/inner_cotton", only: [:dev, :test]},
+      {:credo, "~> 1.7", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false},
       {:yamerl, "~> 0.7", only: :dev}
       | deps(:publish)
     ]
