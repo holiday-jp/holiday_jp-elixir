@@ -5,7 +5,7 @@ defmodule Mix.Tasks.Update do
 
   use Mix.Task
 
-  @shortdoc "Update all dependencies."
+  @shortdoc "Update dependencies and holiday data"
 
   @impl true
   def run(_) do

@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Generate.Holidays do
 
   use Mix.Task
 
-  @shortdoc "Generate the holidays DB"
+  @shortdoc "Generate the holidays database"
 
   @impl true
   def run(_) do
