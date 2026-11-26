@@ -41,5 +41,7 @@ jobs:
         run: mix "do" deps.get, deps.clean --unused
       - name: Lint & test
         run: |
-          mix cotton.lint
+          mix format --check-formatted
+          mix credo --strict
+          mix dialyzer
           mix coveralls.github

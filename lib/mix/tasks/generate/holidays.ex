@@ -17,6 +17,7 @@ defmodule Mix.Tasks.Generate.Holidays do
 
     holidays =
       src
+      |> String.to_charlist()
       |> :yamerl.decode_file()
       |> hd
       |> Enum.map(fn {date, holiday} ->
