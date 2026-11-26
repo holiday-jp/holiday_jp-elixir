@@ -2,8 +2,8 @@ CONTRIBUTING
 ==
 Maintenace tasks
 --
-`mix update`
-Update all dependencies.
+`mix holiday_jp.update`
+Update dependencies and regenerate holiday data.
 
 `mix generate.holidays`
 Generate holidays.ets from holiday_jp dataset.
