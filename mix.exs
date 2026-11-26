@@ -13,6 +13,7 @@ defmodule HolidayJp.MixProject do
         remove_defaults: [:unknown]
       ],
       elixir: "~> 1.19",
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       start_permanent: Mix.env() == :prod,
       test_coverage: [summary: [threshold: 0]],
@@ -35,6 +36,9 @@ defmodule HolidayJp.MixProject do
       mod: {HolidayJp.Application, []}
     ]
   end
+
+  defp elixirc_paths(env) when env in [:dev, :test], do: ["lib", "dev"]
+  defp elixirc_paths(_env), do: ["lib"]
 
   defp deps do
     [
