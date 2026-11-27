@@ -1,0 +1,30 @@
+---
+name: lint github actions
+
+"on":
+  pull_request:
+    paths:
+      - ".github/actions/**"
+      - ".github/workflows/**"
+      - ".github/dependabot.yml"
+  push:
+    paths:
+      - ".github/actions/**"
+      - ".github/workflows/**"
+      - ".github/dependabot.yml"
+
+jobs:
+  gha-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ne-sachirou/lint-gha-reviewdog@c4f93fc0d4856cc4124c352b9c182a55af2e80f7 # v0.0.16
+        with:
+          github_token: ${{ github.token }}
