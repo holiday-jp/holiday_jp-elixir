@@ -14,14 +14,15 @@ name: lint github actions
 jobs:
   gha-lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       checks: write
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - uses: ne-sachirou/lint-gha-reviewdog@v0
+      - uses: ne-sachirou/lint-gha-reviewdog@bd69263d09ec16bc2bd5e389fbb0a0867588957d # v0
         with:
           github_token: ${{ github.token }}

@@ -10,6 +10,9 @@ name: test
 
 jobs:
   test:
+    permissions:
+      contents: read
+    timeout-minutes: 30
     strategy:
       matrix:
         elixir: ["1.19.x", "1.20.x"]
@@ -20,12 +23,14 @@ jobs:
             erlang: "29.x"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: erlef/setup-beam@v1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.erlang }}
-      - uses: actions/cache@v6
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: |
             _build
@@ -35,7 +40,7 @@ jobs:
             ${{ runner.os }}-erl${{ matrix.erlang }}-ex${{ matrix.elixir }}-
             ${{ runner.os }}-erl${{ matrix.erlang }}-
       - name: Install Elixir dependencies
-        run: mix do deps.get + deps.clean --unused
+        run: mix 'do' deps.get + deps.clean --unused
       - name: Lint & test
         run: |
           mix format --check-formatted
