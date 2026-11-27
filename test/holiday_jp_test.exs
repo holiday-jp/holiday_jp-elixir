@@ -4,6 +4,32 @@ defmodule HolidayJpTest do
 
   doctest HolidayJp
 
+  test "the complete dataset is ordered and lookup agrees at every date" do
+    holidays = HolidayJp.Holidays.holidays()
+    dates = Enum.map(holidays, & &1.date)
+    assert dates == Enum.sort(dates, Date)
+    assert length(dates) == length(Enum.uniq(dates))
+
+    for holiday <- holidays do
+      assert HolidayJp.holiday?(holiday.date)
+      assert HolidayJp.on(holiday.date) == [holiday]
+    end
+  end
+
+  property "range lookup agrees with a linear scan" do
+    check all(
+            start <- date(min: ~D[1940-01-01], max: ~D[2160-12-31]),
+            last <- date(min: ~D[1940-01-01], max: ~D[2160-12-31])
+          ) do
+      expected =
+        Enum.filter(HolidayJp.Holidays.holidays(), fn holiday ->
+          Date.compare(start, holiday.date) != :gt and Date.compare(holiday.date, last) != :gt
+        end)
+
+      assert HolidayJp.between(start, last) == expected
+    end
+  end
+
   describe "HolidayJp.between/2" do
     property "includes a known holiday at either boundary and excludes it outside the range" do
       check all(

@@ -30,13 +30,6 @@ defmodule HolidayJp.MixProject do
     ]
   end
 
-  def application do
-    [
-      extra_applications: [],
-      mod: {HolidayJp.Application, []}
-    ]
-  end
-
   defp elixirc_paths(env) when env in [:dev, :test], do: ["lib", "dev"]
   defp elixirc_paths(_env), do: ["lib"]
 
