@@ -6,10 +6,12 @@ name: lint github actions
     paths:
       - ".github/actions/**"
       - ".github/workflows/**"
+      - ".github/dependabot.yml"
   push:
     paths:
       - ".github/actions/**"
       - ".github/workflows/**"
+      - ".github/dependabot.yml"
 
 jobs:
   gha-lint:
