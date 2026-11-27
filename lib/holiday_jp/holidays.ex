@@ -7,10 +7,32 @@ defmodule HolidayJp.Holidays do
   @external_resource data_path
   {rows, _} = Code.eval_file(data_path)
 
+  unless is_list(rows), do: raise("#{data_path}: expected a list of holiday rows")
+
   holidays =
-    Enum.map(rows, fn {date, week, week_en, name, name_en} ->
+    rows
+    |> Enum.with_index(1)
+    |> Enum.map(fn {row, index} ->
+      {date, week, week_en, name, name_en} =
+        case row do
+          {date, week, week_en, name, name_en} -> {date, week, week_en, name, name_en}
+          _ -> raise "#{data_path}: row #{index}: expected five fields"
+        end
+
+      for {field, value} <- [date: date, week: week, week_en: week_en, name: name, name_en: name_en] do
+        unless is_binary(value) and String.valid?(value) and String.trim(value) != "" do
+          raise "#{data_path}: row #{index}: #{field} must be a nonempty string"
+        end
+      end
+
+      parsed_date =
+        case Date.from_iso8601(date) do
+          {:ok, parsed} -> parsed
+          {:error, _} -> raise "#{data_path}: row #{index}: invalid date #{inspect(date)}"
+        end
+
       %Holiday{
-        date: Date.from_iso8601!(date),
+        date: parsed_date,
         week: week,
         week_en: week_en,
         name: name,
@@ -27,9 +49,6 @@ defmodule HolidayJp.Holidays do
   end
 
   @ordered List.to_tuple(holidays)
-
-  @spec holidays :: [Holiday.t()]
-  def holidays, do: Tuple.to_list(@ordered)
 
   @spec between(Date.t(), Date.t()) :: [Holiday.t()]
   def between(%Date{} = start, %Date{} = last) do

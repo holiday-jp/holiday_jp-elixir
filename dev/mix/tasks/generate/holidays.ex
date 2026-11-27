@@ -12,6 +12,11 @@ defmodule Mix.Tasks.Generate.Holidays do
     {:ok, _} = Application.ensure_all_started(:yamerl)
     src = Path.join([__DIR__, "..", "..", "..", "..", "holiday_jp", "holidays_detailed.yml"])
     dest = Path.expand("../../../../priv/holidays.exs", __DIR__)
+
+    unless File.regular?(src) do
+      Mix.raise("holiday dataset not found at #{src}; run git submodule update --init holiday_jp")
+    end
+
     generate(src, dest)
   end
 
@@ -52,12 +57,17 @@ defmodule Mix.Tasks.Generate.Holidays do
     file = File.open!(temp, [:write, :binary, :exclusive])
 
     try do
-      :ok = IO.binwrite(file, contents)
-      :ok = File.close(file)
+      try do
+        :ok = IO.binwrite(file, contents)
+      after
+        :ok = File.close(file)
+      end
+
       File.rename!(temp, dest)
-    after
-      File.close(file)
-      File.rm(temp)
+    catch
+      kind, reason ->
+        File.rm(temp)
+        :erlang.raise(kind, reason, __STACKTRACE__)
     end
   end
 

@@ -27,7 +27,7 @@ defmodule HolidayJpTest do
   end
 
   test "the complete dataset is ordered and lookup agrees at every date" do
-    holidays = HolidayJp.Holidays.holidays()
+    holidays = HolidayJp.between(~D[0000-01-01], ~D[9999-12-31])
     dates = Enum.map(holidays, & &1.date)
     assert dates == Enum.sort(dates, Date)
     assert length(dates) == length(Enum.uniq(dates))
@@ -39,12 +39,14 @@ defmodule HolidayJpTest do
   end
 
   property "range lookup agrees with a linear scan" do
+    holidays = HolidayJp.between(~D[0000-01-01], ~D[9999-12-31])
+
     check all(
             start <- date(min: ~D[1940-01-01], max: ~D[2160-12-31]),
             last <- date(min: ~D[1940-01-01], max: ~D[2160-12-31])
           ) do
       expected =
-        Enum.filter(HolidayJp.Holidays.holidays(), fn holiday ->
+        Enum.filter(holidays, fn holiday ->
           Date.compare(start, holiday.date) != :gt and Date.compare(holiday.date, last) != :gt
         end)
 
