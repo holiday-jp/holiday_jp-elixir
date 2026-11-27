@@ -53,6 +53,11 @@ defmodule HolidayJpTest do
   end
 
   describe "HolidayJp.between/2" do
+    test "returns no holidays for a reversed range" do
+      assert HolidayJp.between(~D[2017-01-10], ~D[2017-01-01]) == []
+      assert HolidayJp.between(~D[2017-01-02], ~D[2017-01-01]) == []
+    end
+
     property "includes a known holiday at either boundary and excludes it outside the range" do
       check all(
               date <- member_of([~D[2017-01-01], ~D[2017-01-09], ~D[2017-02-11], ~D[2017-12-23]]),

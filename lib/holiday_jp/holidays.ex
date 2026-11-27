@@ -7,17 +7,26 @@ defmodule HolidayJp.Holidays do
   @external_resource data_path
   {rows, _} = Code.eval_file(data_path)
 
-  @ordered rows
-           |> Enum.map(fn {date, week, week_en, name, name_en} ->
-             %Holiday{
-               date: Date.from_iso8601!(date),
-               week: week,
-               week_en: week_en,
-               name: name,
-               name_en: name_en
-             }
-           end)
-           |> List.to_tuple()
+  holidays =
+    Enum.map(rows, fn {date, week, week_en, name, name_en} ->
+      %Holiday{
+        date: Date.from_iso8601!(date),
+        week: week,
+        week_en: week_en,
+        name: name,
+        name_en: name_en
+      }
+    end)
+
+  if holidays == [], do: raise("holiday data is empty")
+
+  unless holidays
+         |> Enum.chunk_every(2, 1, :discard)
+         |> Enum.all?(fn [first, last] -> Date.compare(first.date, last.date) == :lt end) do
+    raise "holiday dates must be strictly increasing"
+  end
+
+  @ordered List.to_tuple(holidays)
 
   @spec holidays :: [Holiday.t()]
   def holidays, do: Tuple.to_list(@ordered)
