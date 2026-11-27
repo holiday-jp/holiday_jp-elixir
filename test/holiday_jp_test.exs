@@ -1,8 +1,30 @@
+defmodule HolidayJpTest.ISOCalendar do
+  defdelegate date_to_iso_days(year, month, day), to: Calendar.ISO
+  defdelegate day_rollover_relative_to_midnight_utc(), to: Calendar.ISO
+  defdelegate naive_datetime_to_iso_days(year, month, day, hour, minute, second, microsecond), to: Calendar.ISO
+end
+
 defmodule HolidayJpTest do
   use ExUnit.Case, async: true
   use ExUnitProperties
 
   doctest HolidayJp
+
+  test "lookups reject date-time values" do
+    datetime = ~N[2017-01-01 12:00:00]
+    assert_raise FunctionClauseError, fn -> HolidayJp.holiday?(datetime) end
+    assert_raise FunctionClauseError, fn -> HolidayJp.between(datetime, ~D[2017-01-01]) end
+    assert_raise FunctionClauseError, fn -> HolidayJp.between(~D[2017-01-01], datetime) end
+    assert_raise FunctionClauseError, fn -> HolidayJp.on(datetime) end
+  end
+
+  test "lookups compare dates in compatible calendars" do
+    holiday = %Date{~D[2017-01-01] | calendar: HolidayJpTest.ISOCalendar}
+    weekday = %Date{~D[2017-01-03] | calendar: HolidayJpTest.ISOCalendar}
+    assert HolidayJp.holiday?(holiday)
+    refute HolidayJp.holiday?(weekday)
+    assert [%{date: ~D[2017-01-01]}] = HolidayJp.on(holiday)
+  end
 
   test "the complete dataset is ordered and lookup agrees at every date" do
     holidays = HolidayJp.Holidays.holidays()

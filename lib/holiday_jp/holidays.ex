@@ -7,23 +7,23 @@ defmodule HolidayJp.Holidays do
   @external_resource data_path
   {rows, _} = Code.eval_file(data_path)
 
-  @holidays Enum.map(rows, fn {date, week, week_en, name, name_en} ->
-              %Holiday{
-                date: Date.from_iso8601!(date),
-                week: week,
-                week_en: week_en,
-                name: name,
-                name_en: name_en
-              }
-            end)
-  @ordered List.to_tuple(@holidays)
-  @dates MapSet.new(@holidays, & &1.date)
+  @ordered rows
+           |> Enum.map(fn {date, week, week_en, name, name_en} ->
+             %Holiday{
+               date: Date.from_iso8601!(date),
+               week: week,
+               week_en: week_en,
+               name: name,
+               name_en: name_en
+             }
+           end)
+           |> List.to_tuple()
 
   @spec holidays :: [Holiday.t()]
-  def holidays, do: @holidays
+  def holidays, do: Tuple.to_list(@ordered)
 
   @spec between(Date.t(), Date.t()) :: [Holiday.t()]
-  def between(start, last) do
+  def between(%Date{} = start, %Date{} = last) do
     if Date.compare(start, last) == :gt do
       []
     else
@@ -34,7 +34,10 @@ defmodule HolidayJp.Holidays do
   end
 
   @spec holiday?(Date.t()) :: boolean()
-  def holiday?(date), do: MapSet.member?(@dates, date)
+  def holiday?(%Date{} = date) do
+    index = lower_bound(date, 0, tuple_size(@ordered))
+    index < tuple_size(@ordered) and Date.compare(elem(@ordered, index).date, date) == :eq
+  end
 
   defp lower_bound(_date, low, high) when low == high, do: low
 
