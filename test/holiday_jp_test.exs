@@ -1,10 +1,65 @@
+defmodule HolidayJpTest.ISOCalendar do
+  defdelegate date_to_iso_days(year, month, day), to: Calendar.ISO
+  defdelegate day_rollover_relative_to_midnight_utc(), to: Calendar.ISO
+  defdelegate naive_datetime_to_iso_days(year, month, day, hour, minute, second, microsecond), to: Calendar.ISO
+end
+
 defmodule HolidayJpTest do
   use ExUnit.Case, async: true
   use ExUnitProperties
 
   doctest HolidayJp
 
+  test "lookups reject date-time values" do
+    datetime = ~N[2017-01-01 12:00:00]
+    assert_raise FunctionClauseError, fn -> HolidayJp.holiday?(datetime) end
+    assert_raise FunctionClauseError, fn -> HolidayJp.between(datetime, ~D[2017-01-01]) end
+    assert_raise FunctionClauseError, fn -> HolidayJp.between(~D[2017-01-01], datetime) end
+    assert_raise FunctionClauseError, fn -> HolidayJp.on(datetime) end
+  end
+
+  test "lookups compare dates in compatible calendars" do
+    holiday = %Date{~D[2017-01-01] | calendar: HolidayJpTest.ISOCalendar}
+    weekday = %Date{~D[2017-01-03] | calendar: HolidayJpTest.ISOCalendar}
+    assert HolidayJp.holiday?(holiday)
+    refute HolidayJp.holiday?(weekday)
+    assert [%{date: ~D[2017-01-01]}] = HolidayJp.on(holiday)
+  end
+
+  test "the complete dataset is ordered and lookup agrees at every date" do
+    holidays = HolidayJp.between(~D[0000-01-01], ~D[9999-12-31])
+    dates = Enum.map(holidays, & &1.date)
+    assert dates == Enum.sort(dates, Date)
+    assert length(dates) == length(Enum.uniq(dates))
+
+    for holiday <- holidays do
+      assert HolidayJp.holiday?(holiday.date)
+      assert HolidayJp.on(holiday.date) == [holiday]
+    end
+  end
+
+  property "range lookup agrees with a linear scan" do
+    holidays = HolidayJp.between(~D[0000-01-01], ~D[9999-12-31])
+
+    check all(
+            start <- date(min: ~D[1940-01-01], max: ~D[2160-12-31]),
+            last <- date(min: ~D[1940-01-01], max: ~D[2160-12-31])
+          ) do
+      expected =
+        Enum.filter(holidays, fn holiday ->
+          Date.compare(start, holiday.date) != :gt and Date.compare(holiday.date, last) != :gt
+        end)
+
+      assert HolidayJp.between(start, last) == expected
+    end
+  end
+
   describe "HolidayJp.between/2" do
+    test "returns no holidays for a reversed range" do
+      assert HolidayJp.between(~D[2017-01-10], ~D[2017-01-01]) == []
+      assert HolidayJp.between(~D[2017-01-02], ~D[2017-01-01]) == []
+    end
+
     property "includes a known holiday at either boundary and excludes it outside the range" do
       check all(
               date <- member_of([~D[2017-01-01], ~D[2017-01-09], ~D[2017-02-11], ~D[2017-12-23]]),

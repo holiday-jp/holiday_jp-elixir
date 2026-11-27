@@ -13,15 +13,7 @@ Add `holiday_jp` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:holiday_jp, "~> 0.3"}]
-end
-```
-
-Add `holiday_jp` to your supervision tree in `mix.exs`.
-
-```elixir
-def applications do
-  [applications: [:holiday_jp]]
+  [{:holiday_jp, "~> 0.4"}]
 end
 ```
 

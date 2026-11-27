@@ -8,6 +8,9 @@ defmodule HolidayJp do
   @doc """
   Returns holidays in Japan between start and last.
 
+  Both arguments must be `Date` structs. Calendars must be compatible with
+  `Calendar.ISO`, as required by `Date.compare/2`.
+
       iex> HolidayJp.between(~D[2016-03-01], ~D[2016-03-31])
       [
         %HolidayJp.Holiday{date: ~D[2016-03-20], week: "日", week_en: "Sunday", name: "春分の日", name_en: "Vernal Equinox Day"},
@@ -19,6 +22,8 @@ defmodule HolidayJp do
 
   @doc """
   Detect the date is a holiday in Japan.
+
+  The argument must be a `Date` with a calendar compatible with `Calendar.ISO`.
 
       iex> HolidayJp.holiday?(~D[2017-01-02])
       true
