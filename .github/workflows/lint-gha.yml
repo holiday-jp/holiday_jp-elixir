@@ -20,9 +20,9 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: ne-sachirou/lint-gha-reviewdog@bd69263d09ec16bc2bd5e389fbb0a0867588957d # v0
+      - uses: ne-sachirou/lint-gha-reviewdog@c4f93fc0d4856cc4124c352b9c182a55af2e80f7 # v0.0.16
         with:
           github_token: ${{ github.token }}
